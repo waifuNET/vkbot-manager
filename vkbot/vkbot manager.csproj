@@ -125,5 +125,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\Dialoge.txt" />
+    <Content Include="Files\DialogeGET.txt" />
+    <Content Include="Files\Info.txt" />
+    <Content Include="Files\ZLO.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
