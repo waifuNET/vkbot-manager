@@ -178,10 +178,72 @@ namespace vkbot
 
         public void Bot1()
         {
-            var get = vkapi.Newsfeed.Get(new NewsfeedGetParams
+            while (true)
             {
+                BotsLongPollHistoryResponse poll = new BotsLongPollHistoryResponse();
 
-            });
+                var s1 = vkapigroup.Groups.GetLongPollServer((ulong)groupid);
+                BotsLongPollHistoryResponse poll1 = vkapigroup.Groups.GetBotsLongPollHistory(new BotsLongPollHistoryParams()
+                {
+                    Server = s1.Server,
+                    Ts = s1.Ts,
+                    Key = s1.Key,
+                    Wait = 3
+                });
+                if (poll1?.Updates == null)
+                {
+                    var s2 = vkapigroup.Groups.GetLongPollServer((ulong)groupid);
+                    BotsLongPollHistoryResponse poll2 = vkapigroup.Groups.GetBotsLongPollHistory(new BotsLongPollHistoryParams()
+                    {
+                        Server = s2.Server,
+                        Ts = s2.Ts,
+                        Key = s2.Key,
+                        Wait = 2
+                    });
+                    if (poll2?.Updates == null)
+                    {
+                        var s3 = vkapigroup.Groups.GetLongPollServer((ulong)groupid);
+                        BotsLongPollHistoryResponse poll3 = vkapigroup.Groups.GetBotsLongPollHistory(new BotsLongPollHistoryParams()
+                        {
+                            Server = s3.Server,
+                            Ts = s3.Ts,
+                            Key = s3.Key,
+                            Wait = 1
+                        });
+                        if (poll3?.Updates == null)
+                        {
+                            var s4 = vkapigroup.Groups.GetLongPollServer((ulong)groupid);
+                            BotsLongPollHistoryResponse poll4 = vkapigroup.Groups.GetBotsLongPollHistory(new BotsLongPollHistoryParams()
+                            {
+                                Server = s4.Server,
+                                Ts = s4.Ts,
+                                Key = s4.Key,
+                                Wait = 1
+                            });
+                            if (poll3?.Updates == null) continue;
+                                poll = poll4;
+                                BotGetMessage(poll);
+                        }
+                        else
+                        {
+                            poll = poll3;
+                            BotGetMessage(poll);
+                        }
+                    }
+                    else
+                    {
+                        poll = poll2;
+                        BotGetMessage(poll);
+                    }
+
+                }
+                else
+                {
+                    poll = poll1;
+                    BotGetMessage(poll);
+                }
+            }
+
         }
 
         void BotGetMessage(BotsLongPollHistoryResponse poll)
@@ -226,7 +288,6 @@ namespace vkbot
             string answer = "_null";
             if (message != null & message != "")
             {
-                
                 answer = "Ответ на <<" + message + ">> не был найдет";
 
                 string found = zlo.Find(item => item == userid).ToString();
@@ -238,16 +299,6 @@ namespace vkbot
                 else
                 {
                     localDialoge = Dialoge;
-                }
-                bool CheckAdmin = ADMIN_ACTIVE.Find(item => item == 378068359) >= 1;
-                if (CheckAdmin)
-                {
-                    message = "#" + message;
-                }
-                else
-                {
-                    bool NonAdmin = message[0] == '#';
-                    message = message.Substring(1);
                 }
                 if (message.Trim().ToLower() == "!зло")
                 {

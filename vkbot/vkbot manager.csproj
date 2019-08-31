@@ -7,7 +7,7 @@
     <ProjectGuid>{95AE504C-2C6E-441E-896F-151F45341ECC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>vkbot</RootNamespace>
-    <AssemblyName>vkbot</AssemblyName>
+    <AssemblyName>vkbot commentator</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -109,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
